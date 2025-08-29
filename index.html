@@ -1,0 +1,21 @@
+<DOC TYPE HTML>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="url">
+        <input type="text" id="ver" class="ver_input" placeholder="CDN Ver">
+        <input type="text" id="url" class="url_input" placeholder="URL">
+        <button onclick="clearOutput()" class="url_button">clear</button>
+        <button  onclick="downloadAll()" class="url_button">download all</button>
+    </div>
+    <div class="url">
+        <button onclick="repeatUrls()" class="repeat_button">repeat from</button>
+        <input type="text" id="rep_1" class="repeat_input" placeholder="0">
+        <input type="text" id="rep_2" class="repeat_input" placeholder="10">
+    </div>
+    <div class="output">
+    </div>
+    <script src="js/md5.js"></script>
+    <script src="js/index.js"></script>
+</body>
