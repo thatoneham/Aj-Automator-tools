@@ -1,24 +1,55 @@
 let version = "1731"
+let urls = []
 document.getElementById("url").addEventListener("keydown", generateUrl);
 document.getElementById("ver").addEventListener("keydown", setVersion);
-
+document.getElementById("repBt").addEventListener("click", repeatUrls);
 function repeatUrls(){
     var output = document.getElementsByClassName("output")[0];
     var baseUrl = document.getElementById("url").value;
     var rep_1 = document.getElementById("rep_1").value;
     var rep_2 = document.getElementById("rep_2").value;
     const urlMakerInstance = new urlMaker();
-    for(var i = rep_1; i <= rep_2; i++){
-        output.innerHTML += "<a href="+urlMakerInstance.fetchCDNURL(baseUrl+ i)+">"+urlMakerInstance.fetchCDNURL(baseUrl + i)+"</a>";
-        output.innerHTML += "<br>";
+    for(var i = 0; i <= rep_2 - rep_1; i++){
+        const seq = Number(rep_1) + i
+        let url = urlMakerInstance.fetchCDNURL(baseUrl + seq)
+        urls.push(url);
+        if (output.getElementsByClassName("url").length >= 30){
+        }else{
+            let div = document.createElement("a");
+            div.href = url;
+            div.onclick = function(){functionFetchAndDownload(url)};
+            div.innerHTML = url;
+            output.appendChild(div);
+            output.innerHTML += "<br>";
+        }
     }
 }
+async function functionFetchAndDownload(url) {
+    const response = await fetch(url, { method: 'GET', mode: 'cors' });
+    if (!response.ok) return;
+
+    const blob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+
+    const nameFromUrl = url.split('/').pop().split('?')[0];
+    link.download = nameFromUrl
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(downloadUrl);
+}
+
 function setVersion(){
     version = document.getElementById("ver").value;
 }
 function generateUrl(key){
     if(key.keyCode != 13) return;
     var url = document.getElementById("url").value;
+    urls.push(url);
     var output = document.getElementsByClassName("output")[0];
     const urlMakerInstance = new urlMaker();
     output.innerHTML += "<a href="+urlMakerInstance.fetchCDNURL(url)+">"+urlMakerInstance.fetchCDNURL(url)+"</a>";
@@ -27,12 +58,12 @@ function generateUrl(key){
 function clearOutput(){
     var output = document.getElementsByClassName("output")[0];
     output.innerHTML = "";
+    urls = [];
 }
 function downloadAll(){
-    var output = document.getElementsByClassName("output")[0];
-    var links = output.getElementsByTagName("a");
-    for(var i = 0; i < links.length; i++){
-        window.open(links[i].href);
+    for(var i = 0; i < urls.length; i++){
+        //functionFetchAndDownload(links[i].href);// this too fetch
+        window.open(urls[i])
     }
 }
 class urlMaker {
