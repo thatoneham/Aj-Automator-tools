@@ -8,6 +8,13 @@ document.getElementById("repBt").addEventListener("click", repeatUrls);
 document.getElementById("base").addEventListener("keyup", setBaseUrl);
 document.getElementById("resizer").addEventListener("click", resize);
 document.getElementById("resizer").addEventListener("touchstart", resize);
+
+document.getElementById("rep_1").addEventListener("keyup", setRep);
+document.getElementById("rep_2").addEventListener("keyup", setRep);
+
+function setRep() {
+  localStorage.setItem("rep",JSON.stringify({rep1:document.getElementById("rep_1").value,rep2:document.getElementById("rep_2").value}))
+}
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -18,6 +25,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     document.getElementById("url").value = localStorage.getItem("url")
     document.getElementById("ver").value = version
     document.getElementById("base").value = baseUrl
+    var rep = JSON.parse(localStorage.getItem("rep"))
+    document.getElementById("rep_1").value = rep.rep1
+    document.getElementById("rep_2").value = rep.rep2
 })
 let errDiv = document.getElementById("error")
 var logSize = 0
