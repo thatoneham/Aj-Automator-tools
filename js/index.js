@@ -12,7 +12,7 @@ document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     e.stopPropagation();
 }, true);
-DOMCContentLoaded(() => {
+document.addEventListener("DOMContentLoaded", (event) => {
     version = localStorage.getItem("ver")
     baseUrl = localStorage.getItem("base")
     document.getElementById("url").value = localStorage.getItem("url")
