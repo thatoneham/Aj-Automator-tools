@@ -79,7 +79,7 @@
     }
 
     80% {
-        box-shadow: 0 0 0 5px rgba(165, 165, 165, 0.007);
+        box-shadow: 0 0 0 50.5 rgba(165, 165, 165, 0.007);
     }
 
     100% {
@@ -208,6 +208,9 @@ a{
     text-overflow: ellipsis;
     padding-left: 1vh;
     transition: padding 0.2s cubic-bezier(0,1.13,.62,.97);
+    animation: fadeSlideIn 0.1s ease forwards;
+    user-select: none; 
+    webkit-user-select: none;
 }
 a:hover{
     color: var(--fontHover);
@@ -222,12 +225,10 @@ a:hover{
 }
 .style-1{
     background-color: var(--style-1);
-    animation: fadeSlideIn 0.2s ease forwards;
 }
 
 .style-2{
     background-color: var(--style-2);
-    animation: fadeSlideIn 0.2s ease forwards;
 }
 
 @keyframes fadeSlideIn {

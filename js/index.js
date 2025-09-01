@@ -1,11 +1,16 @@
 let version = "1731"
 let urls = []
+const proxy_url = "https://aliensoda.space"//http://localhost:8088
 document.getElementById("url").addEventListener("keydown", generateUrl);
 document.getElementById("ver").addEventListener("keydown", setVersion);
 document.getElementById("repBt").addEventListener("click", repeatUrls);
 document.getElementById("base").addEventListener("keydown", setBaseUrl);
 document.getElementById("resizer").addEventListener("click", resize);
 document.getElementById("resizer").addEventListener("touchstart", resize);
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+}, true);
 var logSize = 0
 var baseUrl = ""
 let curX = 0;
@@ -43,7 +48,7 @@ function runCheck(resDiv, url) {
   resDiv.classList.remove("success", "fail");
   resDiv.innerText = "...";
 
-  fetch("http://localhost:8088/proxy?url=" + encodeURIComponent(url))
+  fetch(proxy_url + "/proxy?url=" + encodeURIComponent(url))
     .then(res => {
       resDiv.innerText = res.status;
       if (res.ok) {
@@ -72,18 +77,29 @@ async function repeatUrls(){
         if (logSize <= 1001){
             let div = document.createElement("a");
             div.className = "style-" + bgstyle
-            div.href = url;
-            div.onclick = function(){functionFetchAndDownload(url)};
             div.innerHTML = url;
             bgstyle = bgstyle == 1 ? 2 : 1
             var resDiv = document.createElement("a");
             resDiv.className = "style-" + bgstyle
             resDiv.innerText = "...";
             runCheck(resDiv, url)
+            div.onclick = function(){rightClickDelete(resDiv,div,url)}
             outputOrig.appendChild(resDiv);
             output.appendChild(div);
         }
     }
+}
+function rightClickDelete(event,org,div,url){
+  if (event.button == 2) {
+    var outputOrig = document.getElementsByClassName("output-left")[0];
+    var output = document.getElementsByClassName("output-right")[0];
+    output.removeChild(div);
+    outputOrig.removeChild(org);
+    urls.splice(urls.indexOf(url), 1);
+    logSize -= 1
+  } else {
+    window.open(url)
+  }
 }
 async function functionFetchAndDownload(url) {
     var proxyUrl = "http://localhost:8088/proxy?url=" + encodeURIComponent(url);
@@ -121,9 +137,13 @@ async function generateUrl(key){
     resDiv.className = "style-" + bgstyle
     resDiv.innerText = "...";
     runCheck(resDiv, url)
+     let div = document.createElement("a");
+    div.className = "style-" + bgstyle
+    div.innerHTML = url;
     bgstyle = bgstyle == 1 ? 2 : 1
+    div.onmousedown = function(event){rightClickDelete(event,resDiv,div,url)}
     outputOrig.appendChild(resDiv);
-    output.innerHTML += "<a class='style-" + bgstyle + "' href="+ url+">"+url+"</a>";
+    output.appendChild(div);
     logSize +=1
 }
 function clearOutput(){
