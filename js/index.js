@@ -12,6 +12,13 @@ document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     e.stopPropagation();
 }, true);
+DOMCContentLoaded(() => {
+    version = localStorage.getItem("ver")
+    baseUrl = localStorage.getItem("base")
+    document.getElementById("url").value = localStorage.getItem("url")
+    document.getElementById("ver").value = version
+    document.getElementById("base").value = baseUrl
+})
 let errDiv = document.getElementById("error")
 var logSize = 0
 var baseUrl = ""
@@ -45,6 +52,7 @@ function stopResize() {
 
 function setBaseUrl(){
     baseUrl = document.getElementById("base").value
+    localStorage.setItem("base",baseUrl)
 }
 function runCheck(resDiv, url) {
   resDiv.classList.remove("success", "fail");
@@ -65,6 +73,7 @@ function runCheck(resDiv, url) {
       if (res.status == 404) resDiv.innerText = "Err 404";
       if (res.status == 503) resDiv.innerText = "Server returned possible CORS error";
       resDiv.classList.add("fail");
+      errDiv.style.opacity = null
       errDiv.classList.remove("fade");
       errDiv.style.left = resDiv.offsetLeft + "px";
       errDiv.style.top = resDiv.offsetTop + "px";
@@ -137,27 +146,29 @@ async function functionFetchAndDownload(url) {
 
 function setVersion(){
     version = document.getElementById("ver").value;
+    localStorage.setItem("ver",version)
 }
 async function generateUrl(key){
-    if(key.keyCode != 13) return;
-    var url = document.getElementById("url").value;
-    var outputOrig = document.getElementsByClassName("output-left")[0];
-    const urlMakerInstance = new urlMaker();
-    url = urlMakerInstance.fetchCDNURL(url)
-    urls.push(url);
-    var output = document.getElementsByClassName("output-right")[0];
-    var resDiv = document.createElement("a");
-    resDiv.className = "style-" + bgstyle
-    resDiv.innerText = "...";
-    runCheck(resDiv, url)
-     let div = document.createElement("a");
-    div.className = "style-" + bgstyle
-    div.innerHTML = url;
-    bgstyle = bgstyle == 1 ? 2 : 1
-    div.onmousedown = function(event){rightClickDelete(event,resDiv,div,url)}
-    outputOrig.appendChild(resDiv);
-    output.appendChild(div);
-    logSize +=1
+  var url = document.getElementById("url").value;
+  localStorage.setItem("url",url)
+  if(key.keyCode != 13) return;
+  var outputOrig = document.getElementsByClassName("output-left")[0];
+  const urlMakerInstance = new urlMaker();
+  url = urlMakerInstance.fetchCDNURL(url)
+  urls.push(url);
+  var output = document.getElementsByClassName("output-right")[0];
+  var resDiv = document.createElement("a");
+  resDiv.className = "style-" + bgstyle
+  resDiv.innerText = "...";
+  runCheck(resDiv, url)
+    let div = document.createElement("a");
+  div.className = "style-" + bgstyle
+  div.innerHTML = url;
+  bgstyle = bgstyle == 1 ? 2 : 1
+  div.onmousedown = function(event){rightClickDelete(event,resDiv,div,url)}
+  outputOrig.appendChild(resDiv);
+  output.appendChild(div);
+  logSize +=1
 }
 function clearOutput(){
     var output = document.getElementsByClassName("output-right")[0];
