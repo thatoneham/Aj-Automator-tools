@@ -11,6 +11,7 @@ document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     e.stopPropagation();
 }, true);
+let errDiv = document.getElementById("error")
 var logSize = 0
 var baseUrl = ""
 let curX = 0;
@@ -60,6 +61,12 @@ function runCheck(resDiv, url) {
     .catch(() => {
       resDiv.innerText = "ERR";
       resDiv.classList.add("fail");
+      errDiv.classList.remove("fade");
+      errDiv.style.left = resDiv.offsetLeft + "px";
+      errDiv.style.top = resDiv.offsetTop + "px";
+      setTimeout(() => {
+        errDiv.classList.add("fade");
+      }, 2500);
     });
 }
 async function repeatUrls(){

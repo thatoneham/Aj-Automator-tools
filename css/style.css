@@ -17,7 +17,10 @@
     font-size: 2vh;
     padding: 0; margin: 0;
 }
-
+@font-face {
+    font-family: "digital-delivery";
+    src: url("/fonts/digital-delivery/CCDigitalDeliveryRegular.woff");
+}
 .comfortaa-normal {
   font-family: "Comfortaa", sans-serif;
   font-optical-sizing: auto;
@@ -240,4 +243,46 @@ a:hover{
     opacity: 1;
     transform: translateY(0);
   }
+}
+#error{
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    height: 10vh;
+    transition: opacity 0.4s ease-in-out;
+    z-index: 2;
+}
+.fade{
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.error-popup{
+    width: 20vh;
+    position: relative;
+    left: 50%;
+    top: -50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(0deg, #FF4A26 60%, #FF6C47 92%, #FFA38C 100%);
+    text-shadow: 1px 1px 0px rgba(2, 2, 2, 0.25);
+    box-shadow: 0px 2px 1px rgba(2, 2, 2, 0.3);
+    border:#FF4A26 1px solid;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: "digital-delivery";
+    font-size: 2vh;
+    padding-left: 0.5vh;
+    padding-right: 0.5vh;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    border-radius: 1vh;
+    transition: opacity 1s ease forwards;
+}
+.error-arrow{
+    position: absolute;
+    border-left: 1vh solid transparent;
+    border-right: 1vh solid transparent;
+    border-top: 1.3vh solid #FF4A26;
+    margin-top: 1vh;
+    margin-left: 10%;
 }
