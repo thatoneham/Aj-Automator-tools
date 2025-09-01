@@ -1,20 +1,33 @@
 <DOC TYPE HTML>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="url">
-        <input type="text" id="ver" class="ver_input" placeholder="CDN Ver">
-        <input type="text" id="url" class="url_input" placeholder="URL">
-        <button onclick="clearOutput()" class="url_button">clear</button>
-        <button  onclick="downloadAll()" class="url_button">download all</button>
-    </div>
-    <div class="url">
-        <button id="repBt" class="repeat_button">repeat from</button>
-        <input type="text" id="rep_1" class="repeat_input" placeholder="0">
-        <input type="text" id="rep_2" class="repeat_input" placeholder="10">
-    </div>
-    <div class="output">
+    <div class="content-holder">
+        <div class="url" id="url-top" style="margin-top: 1vh;">
+            <input type="text" id="ver" class="ver_input" placeholder="CDN Ver">
+            <input type="text" id="base" class="base_input" placeholder="base url">
+            <input type="text" id="url" class="url_input" placeholder="URL">
+            <button onclick="clearOutput()" class="url_button">clear</button>
+            <button id="download" onclick="downloadAll()" class="url_button">download all</button>
+        </div>
+        <div class="url">
+            <button id="repBt" class="repeat_button">repeat from</button>
+            <input type="text" style="margin-left: 1vh;" id="rep_1" class="repeat_input" placeholder="0">
+            <div class="dash">to</div>
+            <input type="text" id="rep_2" class="repeat_input" placeholder="10">
+        </div>
+        <div class="output">
+            <div class="output-left" style="width: 10vw;" id="output-left">
+            </div>
+            <div class="resizer" id="resizer"></div>
+            <div class="output-right" id="output-right">
+            </div>
+        </div>
     </div>
     <script src="js/md5.js"></script>
     <script src="js/index.js"></script>

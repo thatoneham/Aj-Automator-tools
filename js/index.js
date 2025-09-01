@@ -3,8 +3,63 @@ let urls = []
 document.getElementById("url").addEventListener("keydown", generateUrl);
 document.getElementById("ver").addEventListener("keydown", setVersion);
 document.getElementById("repBt").addEventListener("click", repeatUrls);
-function repeatUrls(){
-    var output = document.getElementsByClassName("output")[0];
+document.getElementById("base").addEventListener("keydown", setBaseUrl);
+document.getElementById("resizer").addEventListener("click", resize);
+document.getElementById("resizer").addEventListener("touchstart", resize);
+var logSize = 0
+var baseUrl = ""
+let curX = 0;
+let startWidth = 0;
+var bgstyle = 1
+function resize(event) {
+  event.preventDefault();
+  const output = document.getElementsByClassName("output-left")[0];
+  
+  curX = event.clientX;
+  startWidth = output.offsetWidth;
+
+  document.addEventListener("mousemove", resizeTick);
+  document.addEventListener("touchmove", resizeTick);
+  document.addEventListener("mouseup", stopResize);
+  document.addEventListener("touchend", stopResize);
+}
+
+function resizeTick(event) {
+  const output = document.getElementsByClassName("output-left")[0];
+  const currentMouseX = event.clientX;
+  
+  output.style.width = (startWidth + (currentMouseX - curX)) - 6 + "px";
+}
+
+function stopResize() {
+  document.removeEventListener("mousemove", resizeTick);
+  document.removeEventListener("mouseup", stopResize);
+}
+
+function setBaseUrl(){
+    baseUrl = document.getElementById("base").value
+}
+function runCheck(resDiv, url) {
+  resDiv.classList.remove("success", "fail");
+  resDiv.innerText = "...";
+
+  fetch("http://localhost:8088/proxy?url=" + encodeURIComponent(url))
+    .then(res => {
+      resDiv.innerText = res.status;
+      if (res.ok) {
+        resDiv.classList.add("success");
+      } else {
+        resDiv.classList.add("fail");
+      }
+    })
+    .catch(() => {
+      resDiv.innerText = "ERR";
+      resDiv.classList.add("fail");
+    });
+}
+async function repeatUrls(){
+    var outputOrig = document.getElementsByClassName("output-left")[0];
+    var output = document.getElementsByClassName("output-right")[0];
     var baseUrl = document.getElementById("url").value;
     var rep_1 = document.getElementById("rep_1").value;
     var rep_2 = document.getElementById("rep_2").value;
@@ -12,20 +67,28 @@ function repeatUrls(){
     for(var i = 0; i <= rep_2 - rep_1; i++){
         const seq = Number(rep_1) + i
         let url = urlMakerInstance.fetchCDNURL(baseUrl + seq)
-        urls.push(url);
-        if (output.getElementsByClassName("url").length >= 30){
-        }else{
+        urls.push(url)
+        logSize += 1
+        if (logSize <= 1001){
             let div = document.createElement("a");
+            div.className = "style-" + bgstyle
             div.href = url;
             div.onclick = function(){functionFetchAndDownload(url)};
             div.innerHTML = url;
+            bgstyle = bgstyle == 1 ? 2 : 1
+            var resDiv = document.createElement("a");
+            resDiv.className = "style-" + bgstyle
+            resDiv.innerText = "...";
+            runCheck(resDiv, url)
+            outputOrig.appendChild(resDiv);
             output.appendChild(div);
-            output.innerHTML += "<br>";
         }
     }
 }
 async function functionFetchAndDownload(url) {
-    const response = await fetch(url, { method: 'GET', mode: 'cors' });
+    var proxyUrl = "http://localhost:8088/proxy?url=" + encodeURIComponent(url);
+    // need to request as octel so that it wont mess up the file format
+    const response = await fetch(proxyUrl, { method: 'GET', headers: { 'Accept': 'application/octet-stream' },"content-type": 'application/octet-stream' });
     if (!response.ok) return;
 
     const blob = await response.blob();
@@ -46,24 +109,35 @@ async function functionFetchAndDownload(url) {
 function setVersion(){
     version = document.getElementById("ver").value;
 }
-function generateUrl(key){
+async function generateUrl(key){
     if(key.keyCode != 13) return;
     var url = document.getElementById("url").value;
-    urls.push(url);
-    var output = document.getElementsByClassName("output")[0];
+    var outputOrig = document.getElementsByClassName("output-left")[0];
     const urlMakerInstance = new urlMaker();
-    output.innerHTML += "<a href="+urlMakerInstance.fetchCDNURL(url)+">"+urlMakerInstance.fetchCDNURL(url)+"</a>";
-    output.innerHTML += "<br>";
+    url = urlMakerInstance.fetchCDNURL(url)
+    urls.push(url);
+    var output = document.getElementsByClassName("output-right")[0];
+    var resDiv = document.createElement("a");
+    resDiv.className = "style-" + bgstyle
+    resDiv.innerText = "...";
+    runCheck(resDiv, url)
+    bgstyle = bgstyle == 1 ? 2 : 1
+    outputOrig.appendChild(resDiv);
+    output.innerHTML += "<a class='style-" + bgstyle + "' href="+ url+">"+url+"</a>";
+    logSize +=1
 }
 function clearOutput(){
-    var output = document.getElementsByClassName("output")[0];
+    var output = document.getElementsByClassName("output-right")[0];
+    output.innerHTML = "";
+    output = document.getElementsByClassName("output-left")[0];
     output.innerHTML = "";
     urls = [];
+    logSize = 0
 }
 function downloadAll(){
     for(var i = 0; i < urls.length; i++){
-        //functionFetchAndDownload(links[i].href);// this too fetch
-        window.open(urls[i])
+        functionFetchAndDownload(urls[i]);// this too fetch
+        //window.open(urls[i])
     }
 }
 class urlMaker {
@@ -85,11 +159,12 @@ class urlMaker {
   }
 
   fetchCDNURL(p1, p2 = "/", p3 = true) {
-    const contentURL = "https://ajcontent.akamaized.net/";
+    const contentURL = "https://ajcontent.akamaized.net/"
     let loc7 = null;
     let loc4 = null;
     let loc8 = null;
     let loc6 = "";
+    let base = (baseUrl != "" ? baseUrl + "/" : "")
     const loc5 = version;
 
     if (loc5 !== "0" && p3) {
@@ -108,14 +183,14 @@ class urlMaker {
 
     if (p3) {
       if (loc5 === "0") {
-        loc7 = contentURL + loc6 + p1 + "?v=1";
+        loc7 = contentURL + loc6 + base + p1 + "?v=1";
       } else {
-        loc7 = contentURL + loc6 + loc4 + "?v=2";
+        loc7 = contentURL + loc6 + base+ loc4 + "?v=2";
       }
     } else if (loc5 === "0") {
-      loc7 = contentURL + loc6 + p1;
+      loc7 = contentURL + loc6  + base+ p1;
     } else {
-      loc7 = contentURL + loc6 + loc4;
+      loc7 = contentURL + loc6 + base + loc4;
     }
 
     return loc7;
