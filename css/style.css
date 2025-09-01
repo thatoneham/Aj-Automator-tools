@@ -19,7 +19,7 @@
 }
 @font-face {
     font-family: "digital-delivery";
-    src: url("/fonts/digital-delivery/CCDigitalDeliveryRegular.woff");
+    src: url("fonts/digital-delivery/CCDigitalDeliveryRegular.woff");
 }
 .comfortaa-normal {
   font-family: "Comfortaa", sans-serif;
