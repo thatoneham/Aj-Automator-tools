@@ -71,11 +71,13 @@
     width: 40vw;
     flex-grow: 0;
     padding: 0vh 0.5vh 0vh 0.5vh;
+    flex-grow: 1;    
     
 }
 .url_input:focus{
    flex-grow: 1;
 }
+
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgb(255, 255, 255);
@@ -249,12 +251,15 @@ a:hover{
     top: 50vh;
     left: 50vw;
     height: 10vh;
-    transition: opacity 0.4s ease-in-out;
+    transition-property: opacity, left, top;
+    transition-duration: 0.3s, 0.3s, 0.3s;
+    transition-timing-function: ease-in-out, cubic-bezier(0,1.13,.62,.97), cubic-bezier(0,1.13,.62,.97);
     z-index: 2;
+    pointer-events: none;
 }
 .fade{
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 .error-popup{
