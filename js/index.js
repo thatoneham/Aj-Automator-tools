@@ -1,5 +1,6 @@
 let version = "1731"
 let urls = []
+let errDivTimeout
 const proxy_url = "https://aliensoda.space"//http://localhost:8088
 document.getElementById("url").addEventListener("keydown", generateUrl);
 document.getElementById("ver").addEventListener("keydown", setVersion);
@@ -58,15 +59,20 @@ function runCheck(resDiv, url) {
         resDiv.classList.add("fail");
       }
     })
-    .catch(() => {
+    .catch((res) => {
       resDiv.innerText = "ERR";
+
+      if (res.status == 404) resDiv.innerText = "Err 404";
+      if (res.status == 503) resDiv.innerText = "Server returned possible CORS error";
       resDiv.classList.add("fail");
       errDiv.classList.remove("fade");
       errDiv.style.left = resDiv.offsetLeft + "px";
       errDiv.style.top = resDiv.offsetTop + "px";
-      setTimeout(() => {
+      clearTimeout(errDivTimeout);
+
+      errDivTimeout = setTimeout(() => {
         errDiv.classList.add("fade");
-      }, 2500);
+      }, 3000);
     });
 }
 async function repeatUrls(){
