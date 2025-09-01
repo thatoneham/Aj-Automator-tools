@@ -48,7 +48,7 @@ function runCheck(resDiv, url) {
   resDiv.classList.remove("success", "fail");
   resDiv.innerText = "...";
 
-  fetch(proxy_url + "/proxy?url=" + encodeURIComponent(url))
+  fetch(proxy_url + "/proxy?url=" + encodeURIComponent(url), { method: 'GET',  "cors":"cors" })
     .then(res => {
       resDiv.innerText = res.status;
       if (res.ok) {
