@@ -2,10 +2,10 @@ let version = "1731"
 let urls = []
 let errDivTimeout
 const proxy_url = "https://aliensoda.space"//http://localhost:8088
-document.getElementById("url").addEventListener("keydown", generateUrl);
-document.getElementById("ver").addEventListener("keydown", setVersion);
+document.getElementById("url").addEventListener("keyup", generateUrl);
+document.getElementById("ver").addEventListener("keyup", setVersion);
 document.getElementById("repBt").addEventListener("click", repeatUrls);
-document.getElementById("base").addEventListener("keydown", setBaseUrl);
+document.getElementById("base").addEventListener("keyup", setBaseUrl);
 document.getElementById("resizer").addEventListener("click", resize);
 document.getElementById("resizer").addEventListener("touchstart", resize);
 document.addEventListener('contextmenu', (e) => {
