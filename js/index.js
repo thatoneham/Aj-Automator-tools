@@ -194,6 +194,10 @@ function downloadAll(){
         //window.open(urls[i])
     }
 }
+function closeControlsWindow(){
+    var controls = document.getElementsByClassName("controls")[0];
+    controls.style.display = "none";
+}
 class urlMaker {
   bitShift(def_id, sort_cat = 0) {
     return (def_id << 16) | (sort_cat & 0xFFFF);

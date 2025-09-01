@@ -291,3 +291,46 @@ a:hover{
     margin-top: 1vh;
     margin-left: 10%;
 }
+.controls{
+    width: 30vh;
+    height: 40vh;
+    background-color: #b8b8b83d;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    float: right;
+    color: #ffffff;
+    padding-left: 1vh;
+    padding-top: 0.5vh;
+    border-top: 0.5vh solid #97979788;
+    display: flex;
+    flex-direction: column;
+    margin-right: 1vh;
+    margin-bottom: 1vh;
+
+}
+.control-close{
+    width: 3vh;
+    height: 3vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #202020;
+    color: #ffffff;
+    text-align: center;
+    font-size: 2vh;
+    line-height: 3vh;
+    cursor: pointer
+}
+.control-option{
+    min-height: 2vh;
+    width: 100%;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.8vh;
+    padding-bottom: 0.5vh;
+    border-bottom: 0.3vh solid #86868671;
+}
+.control-option:hover{
+    color: var(--fontHover);
+}
