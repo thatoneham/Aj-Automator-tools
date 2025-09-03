@@ -256,35 +256,73 @@ button:hover{
 .output-right{
     float: right;
     text-align: right;
-    padding-right: 1vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     flex: 1;
     min-width: 0px;
-    overflow-x: scroll;
 }
 a{
     display: block;
+    color: var(--font-color);
+    flex-grow: 0 1;
     text-align: left;
     font-size: 3vh;
-    color: var(--font-color);
-    width: 100%;
     padding-top: 0.5vh;
+    padding-left: 1vh;
     padding-bottom: 1vh;
     word-break:keep-all;
     white-space:nowrap;
     text-overflow: ellipsis;
-    padding-left: 1vh;
+    overflow-x: hidden;
     transition: padding 0.2s cubic-bezier(0,1.13,.62,.97);
     animation: fadeSlideIn 0.1s ease forwards;
     user-select: none; 
     webkit-user-select: none;
+    container-type: inline-size;
 }
 a:hover{
     color: var(--fontHover);
-    padding-top: 0.2vh;
+    padding-top: 0.3vh;
     padding-bottom: 1.3vh;
+    text-align: start;
+    /* animation: text-scroll 10s linear infinite; */
+}
+.a-text{
+    width: fit-content;
+    text-align: left;
+    font-size: 3vh;
+}
+@keyframes return {
+    100%{
+        transform: translateX(0%);
+    }
+    
+}
+a:hover .a-text{
+    animation: text-scroll 10s linear infinite;
+    text-align: start;
+    transform:  translateX(min(calc(100cqw - 100%), 0vw));
+}
+@keyframes text-scroll {
+    0%{
+        transform: translateX(0%);
+    }
+    5%{
+        transform: translateX(0%);
+    }
+    40%{
+        transform:  translateX(min(calc(100cqw - 100%), 0vw));
+    }
+    70%{
+        transform:  translateX(min(calc(100cqw - 100%), 0vw));
+    }
+    95%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
 }
 .success{
     color: var(--success-color);
@@ -402,4 +440,31 @@ a:hover{
     display: flex;
     flex-direction: row;
     margin-bottom: 1vh;
+}
+.extra-info{
+    width: fit-content;
+    height: 0vh;
+    overflow: hidden;
+    display: flex;
+    background: linear-gradient(0deg, #26a8ff 60%, #4772ff 92%, #948cff 100%);
+    text-shadow: 0.1vh 0.1vh 0px rgba(2, 2, 2, 0.25);
+    box-shadow: 0px 0.2vh 0.1vh rgba(2, 2, 2, 0.3);
+    color: #FFFFFF;
+    text-align: center;
+    font-family: "digital-delivery";
+    font-size: 2.5vh;
+    transition: height 0.1s cubic-bezier(0,1.13,.62,.97);
+}
+a:hover .extra-info{
+    height: 3vh;
+    margin-top: 1vh;
+    border:#4772ff 0.1vh solid;
+}
+.info-sep{
+    width: auto;
+    height: 100%;
+    line-height: 3vh;
+    border-right: 0.3vh solid #246997;
+    padding-right: 1vh;
+    padding-left: 1vh;
 }

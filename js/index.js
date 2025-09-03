@@ -94,9 +94,28 @@ function runCheck(resDiv, url) {
       }, 3000);
     });
 }
+function makeDiv(url,ver,seq = ""){
+   var outputOrig = document.getElementsByClassName("output-left")[0];
+  var output = document.getElementsByClassName("output-right")[0];
+
+  let div = document.createElement("a");
+  div.className = "style-" + bgstyle
+  div.innerHTML = "<div class=\"a-text\"> " + url + "</div>";
+  bgstyle = bgstyle == 1 ? 2 : 1
+  var resDiv = document.createElement("a");
+  resDiv.className = "style-" + bgstyle
+  resDiv.innerText = "...";
+  var extraInfo = document.createElement("div");
+  extraInfo.innerHTML = "<div class=\"info-sep\">" + "CDN ver: " + ver + "</div>" + "<div class=\"info-sep\">" + "base  url: " +  seq + "</div>"
+  extraInfo.classList.add("extra-info")
+  div.appendChild(extraInfo)
+  runCheck(resDiv, url)
+  div.onclick = function(){rightClickDelete(resDiv,div,url)}
+  outputOrig.appendChild(resDiv);
+  output.appendChild(div);
+  urls.push(url);
+}
 async function repeatUrls(){
-    var outputOrig = document.getElementsByClassName("output-left")[0];
-    var output = document.getElementsByClassName("output-right")[0];
     var baseUrl = document.getElementById("url").value;
     var rep_1 = document.getElementById("rep_1").value;
     var rep_2 = document.getElementById("rep_2").value;
@@ -104,20 +123,9 @@ async function repeatUrls(){
     for(var i = 0; i <= rep_2 - rep_1; i++){
         const seq = Number(rep_1) + i
         let url = urlMakerInstance.fetchCDNURL(baseUrl + seq)
-        urls.push(url)
         logSize += 1
         if (logSize <= 1001){
-            let div = document.createElement("a");
-            div.className = "style-" + bgstyle
-            div.innerHTML = url;
-            bgstyle = bgstyle == 1 ? 2 : 1
-            var resDiv = document.createElement("a");
-            resDiv.className = "style-" + bgstyle
-            resDiv.innerText = "...";
-            runCheck(resDiv, url)
-            div.onclick = function(){rightClickDelete(resDiv,div,url)}
-            outputOrig.appendChild(resDiv);
-            output.appendChild(div);
+            makeDiv(url,version,baseUrl + seq)
         }
     }
 }
@@ -164,20 +172,9 @@ async function generateUrl(key){
   if(key.keyCode != 13) return;
   var outputOrig = document.getElementsByClassName("output-left")[0];
   const urlMakerInstance = new urlMaker();
+  var orgUrl = url
   url = urlMakerInstance.fetchCDNURL(url)
-  urls.push(url);
-  var output = document.getElementsByClassName("output-right")[0];
-  var resDiv = document.createElement("a");
-  resDiv.className = "style-" + bgstyle
-  resDiv.innerText = "...";
-  runCheck(resDiv, url)
-    let div = document.createElement("a");
-  div.className = "style-" + bgstyle
-  div.innerHTML = url;
-  bgstyle = bgstyle == 1 ? 2 : 1
-  div.onmousedown = function(event){rightClickDelete(event,resDiv,div,url)}
-  outputOrig.appendChild(resDiv);
-  output.appendChild(div);
+  makeDiv(url,version,orgUrl)
   logSize +=1
 }
 function clearOutput(){
