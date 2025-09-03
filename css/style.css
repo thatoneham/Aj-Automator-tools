@@ -11,6 +11,7 @@
     --style-2: #3a3a3a;
     --success-color: #8cdd8c;
     --fail-color: #cf5a5a;
+    --pulse-color: rgb(0, 247, 255);
 }
 * {
     font-family: "Comfortaa", sans-serif;
@@ -48,6 +49,76 @@
     outline: none;
     border:none;
 }
+@media screen and (max-width: 640px) {
+    .url_input{
+        width: 10vw;
+    }
+    .url_button{
+        font-size: 2vw;
+        text-align: center;
+
+    }
+    #download{
+        min-width: 0;
+    }
+    .ver_input{
+        width: 10vh;
+        font-size: 3vw;
+        padding-left: 1vh;
+    }
+    .base_input{
+        width: 12vh;
+        font-size: 3vw;
+    }
+    .input-focus:focus-within .ver_input{
+        width: 0vw;
+        padding: 0 0 0 1vh;
+    }
+    .input-focus:focus-within .ver_input:not(.ver_input:focus){
+        outline: 0;
+        padding: 0 0 0 0;
+    }
+    .input-focus:focus-within .base_input{
+        width: 0vw;
+        padding: 0 0 0 1vh;
+    }
+    .input-focus:focus-within .base_input:not(.base_input:focus){
+        outline: 0;
+        padding: 0 0 0 0;
+    }
+    .input-focus:focus-within .url_input:not(.url_input:focus){
+        width: 0vw;
+        flex-grow: 0;
+        padding: 0 0 0 0;
+    }
+    .url_input:focus, .base_input:focus, .ver_input:focus{
+        border-top-left-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+        outline: 0.2vh solid var(--outline-color);
+    }
+}
+.input-focus{
+    display: flex;
+    width: 100%;
+}
+@media screen and (min-width: 640px) {
+    .url_button{
+        font-size: 1.5vh;
+        min-width: 6vh;
+    }
+    #download{
+        min-width: 12vw;
+    }
+    .ver_input{
+        width: 12vh;
+        margin-left: 1vh;
+        padding: 0 0 0 1vh;
+    }
+    .base_input{
+        width: 12vh;
+        padding-left: 1vh;
+    }
+}
 #url-top{
     
 }
@@ -62,14 +133,11 @@
 }
 .ver_input{
     height: 5vh;
-    width: 10vh;
     margin-left: 1vh;
     text-align: center;
 }
 .url_input{
     height: 5vh;
-    width: 40vw;
-    flex-grow: 0;
     padding: 0vh 0.5vh 0vh 0.5vh;
     flex-grow: 1;    
     
@@ -80,11 +148,11 @@
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgb(255, 255, 255);
+        box-shadow: 0 0 0 0.3vh var(--pulse-color);
     }
 
-    80% {
-        box-shadow: 0 0 0 0.5vh rgba(165, 165, 165, 0.007);
+    90% {
+        box-shadow: 0 0 0 0.5vh rgba(255, 255, 255, 0.007);
     }
 
     100% {
@@ -99,11 +167,8 @@
 }
 .url_button{
     height: 5vh;
-    min-width: 6vh;
-    width: auto;
     padding-left: 1vh;
     padding-right: 1vh;
-    font-size: 1.5vh;
     outline: 0.2vh solid var(--outline-color);
 }
 input{
@@ -111,10 +176,12 @@ input{
     outline: 0.2vh solid var(--outline-color);
     background-color: var(--item-bg);
     color: var(--font-color);
-    transition: flex-grow 0.2s cubic-bezier(.04,1.02,.07,1)
+    transition-property: flex-grow, width;
+    transition-duration: 0.2s, 0.2s;
+    transition-timing-function: cubic-bezier(.04,1.02,.07,1), cubic-bezier(.04,1.02,.07,1);
 }
 input:focus{
-    animation: pulse 1s cubic-bezier(.04,1.02,.07,1);
+    animation: pulse 1.3s cubic-bezier(.04,1.02,.07,1);
 }
 button{
     border:0;
@@ -155,11 +222,9 @@ button:hover{
     border-top-left-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
     text-align: left;
-    padding-left: 1vh;
 }
 #base{
     text-align: left;
-    padding-left: 1vh;
 }
 #ver:focus,#base:focus{
     flex-grow: 1;
@@ -168,7 +233,6 @@ button:hover{
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
     margin-right: 1vh;
-    min-width: 12vh;
 }
 .output-left{
     float: left;
@@ -261,7 +325,6 @@ a:hover{
     opacity: 0;
     transition: all 1s ease-in-out;
 }
-
 .error-popup{
     width: 20vh;
     position: relative;
@@ -302,7 +365,7 @@ a:hover{
     color: #ffffff;
     padding-left: 1vh;
     padding-top: 0.5vh;
-    border-top: 0.5vh solid #97979788;
+    border-top: 0.5vh solid #ffffffb4;
     display: flex;
     flex-direction: column;
     margin-right: 1vh;
@@ -333,4 +396,10 @@ a:hover{
 }
 .control-option:hover{
     color: var(--fontHover);
+}
+.cont-box{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1vh;
 }

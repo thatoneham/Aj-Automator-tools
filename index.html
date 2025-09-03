@@ -9,13 +9,15 @@
 <body>
     <div class="content-holder">
         <div class="url" id="url-top" style="margin-top: 1vh;">
-            <input type="text" id="ver" class="ver_input" placeholder="CDN Ver">
+            <div class="input-focus">
+            <input type="text" id="ver" class="ver_input" placeholder="CDN ver">
             <input type="text" id="base" class="base_input" placeholder="base url">
             <input type="text" id="url" class="url_input" placeholder="URL">
+            </div>
             <button onclick="clearOutput()" class="url_button">clear</button>
             <button id="download" onclick="downloadAll()" class="url_button">download all</button>
         </div>
-        <div class="url">
+        <div class="url" id="url-bottom">
             <button id="repBt" class="repeat_button">repeat from</button>
             <input type="text" style="margin-left: 1vh;" id="rep_1" class="repeat_input" placeholder="0">
             <div class="dash">to</div>

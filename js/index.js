@@ -1,7 +1,7 @@
 let version = "1731"
 let urls = []
 let errDivTimeout
-const proxy_url = "https://aliensoda.space"//http://localhost:8088
+const proxy_url = "http://localhost:8088"//"https://aliensoda.space"
 document.getElementById("url").addEventListener("keyup", generateUrl);
 document.getElementById("ver").addEventListener("keyup", setVersion);
 document.getElementById("repBt").addEventListener("click", repeatUrls);
