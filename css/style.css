@@ -49,7 +49,7 @@
     outline: none;
     border:none;
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 40em) {
     .url_input{
         width: 10vw;
     }
@@ -62,12 +62,12 @@
         min-width: 0;
     }
     .ver_input{
-        width: 10vh;
+        width: 7vw;
         font-size: 3vw;
-        padding-left: 1vh;
+        padding-left: 1vw;
     }
     .base_input{
-        width: 12vh;
+        width: 10vw;
         font-size: 3vw;
     }
     .input-focus:focus-within .ver_input{
@@ -101,7 +101,7 @@
     display: flex;
     width: 100%;
 }
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 40em) {
     .url_button{
         font-size: 1.5vh;
         min-width: 6vh;
@@ -162,7 +162,6 @@
 }
 .base_input{
     height: 5vh;
-    width: 12vh;
     text-align: center;
 }
 .url_button{
