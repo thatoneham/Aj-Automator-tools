@@ -1,4 +1,4 @@
-let version = "1731"
+let version = "1803"
 let urls = []
 let errDivTimeout
 const proxy_url = "http://localhost:8088"//"https://aliensoda.space"
@@ -129,17 +129,10 @@ async function repeatUrls(){
         }
     }
 }
-function rightClickDelete(event,org,div,url){
-  if (event.button == 2) {
-    var outputOrig = document.getElementsByClassName("output-left")[0];
-    var output = document.getElementsByClassName("output-right")[0];
-    output.removeChild(div);
-    outputOrig.removeChild(org);
-    urls.splice(urls.indexOf(url), 1);
-    logSize -= 1
-  } else {
-    window.open(url)
-  }
+function rightClickDelete(org,div,url){
+
+  window.open(url)
+  
 }
 async function functionFetchAndDownload(url) {
     var proxyUrl = "http://localhost:8088/proxy?url=" + encodeURIComponent(url);
