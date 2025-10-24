@@ -63,13 +63,19 @@
     }
     .ver_input{
         width: 15vw;
-        font-size: 3vw;
+        font-size: 2.5vw;
         padding-left: 1vw;
     }
     .base_input{
-        width: 12vw;
-        font-size: 3vw;
+        width: 15vw;
+        font-size: 2.5vw;
         padding-left: 1vw;
+    }
+    .a-text{
+        font-size: 4vw;
+    }
+    a{
+        font-size: 4vw;
     }
     .input-focus:focus-within .ver_input{
         width: 0vw;
@@ -97,6 +103,13 @@
         border-bottom-left-radius: var(--border-radius);
         outline: 0.2vh solid var(--outline-color);
     }
+    a:hover .extra-info{
+        height: 4vw;
+        line-height: 4vw;
+    }
+    .info-sep{
+        font-size: 2vw;
+    }
 }
 .input-focus{
     display: flex;
@@ -118,6 +131,19 @@
     .base_input{
         width: 12vh;
         padding-left: 1vh;
+    }
+    .a-text{
+        font-size: 3vh;
+    }
+    a{
+        font-size: 3vh;
+    }
+    a:hover .extra-info{
+        height: 3vh;
+        line-height: 3vh;
+    }
+    .info-sep{
+        font-size: 2.5vh;
     }
 }
 #url-top{
@@ -163,7 +189,6 @@
 }
 .base_input{
     height: 5vh;
-    width: 12vh;
     text-align: center;
 }
 .url_button{
@@ -268,7 +293,6 @@ a{
     color: var(--font-color);
     flex-grow: 0 1;
     text-align: left;
-    font-size: 3vh;
     padding-top: 0.5vh;
     padding-left: 1vh;
     padding-bottom: 1vh;
@@ -292,7 +316,6 @@ a:hover{
 .a-text{
     width: fit-content;
     text-align: left;
-    font-size: 3vh;
 }
 @keyframes return {
     100%{
@@ -420,7 +443,7 @@ a:hover .a-text{
     background-color: #202020;
     color: #ffffff;
     text-align: center;
-    font-size: 2vh;
+    font-size: 2vw;
     line-height: 3vh;
     cursor: pointer
 }
@@ -429,7 +452,7 @@ a:hover .a-text{
     width: 100%;
     color: #ffffff;
     text-align: center;
-    font-size: 1.8vh;
+    font-size: 1.8vw;
     padding-bottom: 0.5vh;
     border-bottom: 0.3vh solid #86868671;
 }
@@ -453,18 +476,15 @@ a:hover .a-text{
     color: #FFFFFF;
     text-align: center;
     font-family: "digital-delivery";
-    font-size: 2.5vh;
     transition: height 0.1s cubic-bezier(0,1.13,.62,.97);
 }
 a:hover .extra-info{
-    height: 3vh;
     margin-top: 1vh;
     border:#4772ff 0.1vh solid;
 }
 .info-sep{
     width: auto;
     height: 100%;
-    line-height: 3vh;
     border-right: 0.3vh solid #246997;
     padding-right: 1vh;
     padding-left: 1vh;

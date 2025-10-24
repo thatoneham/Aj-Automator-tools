@@ -110,7 +110,9 @@ function makeDiv(url,ver,seq = ""){
   extraInfo.classList.add("extra-info")
   div.appendChild(extraInfo)
   runCheck(resDiv, url)
-  div.onclick = function(){rightClickDelete(resDiv,div,url)}
+  div.addEventListener("click", function(e){
+    rightClickDelete(e, resDiv, div, url);
+  });
   outputOrig.appendChild(resDiv);
   output.appendChild(div);
   urls.push(url);
@@ -130,6 +132,7 @@ async function repeatUrls(){
     }
 }
 function rightClickDelete(event,org,div,url){
+  console.log(event)
   if (event.button == 2) {
     var outputOrig = document.getElementsByClassName("output-left")[0];
     var output = document.getElementsByClassName("output-right")[0];
@@ -138,6 +141,7 @@ function rightClickDelete(event,org,div,url){
     urls.splice(urls.indexOf(url), 1);
     logSize -= 1
   } else {
+    console.log(url)
     window.open(url)
   }
 }
